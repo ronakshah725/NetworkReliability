@@ -2,6 +2,14 @@ from connected import connected
 import random
 
 
+# Generate 10 bit binary numbers from 0 to 1024
+
+def make_combination():
+    edge_mat = [get_combination(i) for i in range(1024)]
+    return edge_mat
+
+# Convert given number to a 10 bit binary number
+
 def get_combination(n):
     combination = [i for i in range(10)]
     ne = len(combination)
@@ -11,11 +19,10 @@ def get_combination(n):
     return combination
 
 
-def make_combination():
-    edge_mat = [get_combination(i) for i in range(1024)]
-    return edge_mat
 
 
+# Calculate the connectivity for the given combination matrix edge_matrix and
+# link reliability p
 def calc_reliability(edge_mat, p):
     if p == 0.0:
         return 0.0
@@ -23,7 +30,7 @@ def calc_reliability(edge_mat, p):
     comb_reliability = 0.0
     for i in edge_mat:
 
-        adj_mat = [[0 for x in range(5)] for x in range(5)]
+        adj_mat = [[0 for x in range(5)] for x in range(5)] #generate a 5X5 matrix to transform edge-mat to adj-mat
         adj_i, adj_j = 0, 1
         for j in range(10):
 
@@ -41,7 +48,7 @@ def calc_reliability(edge_mat, p):
                 adj_j += 1
 
         if connected(adj_mat):
-            comb_reliability += get_reliability(i, p)
+            comb_reliability += get_reliability(i, p) # sum up the reliability to find the total network reliability
             # count += 1
             # print True , ' | ', i, ' | ', adj_mat, ' | ', count
 
@@ -53,9 +60,9 @@ def get_reliability(edge_mat, p):
     rel = 1.0
     for col in edge_mat:
         if col == 1:
-            rel = rel * p
+            rel = rel * p # p is the probability that the link is up
         else:
-            rel = rel * (1.0 - p)
+            rel = rel * (1.0 - p) # 1-p is the probability that the link is down
     return rel
 
 
@@ -64,18 +71,6 @@ def drange(start, stop, step):
     while r < stop:
         yield r
         r += step
-
-
-# def k_reliability(edge_mat, k):
-#
-#     copy = edge_mat[:]
-#     random.shuffle(edge_mat)
-#     edge_mat = edge_mat[0:k]
-#     flipped_edge_mat = flip(edge_mat)
-#     for r in range(k):
-#         copy[r] = flipped_edge_mat[r]
-#     # print flipped_edge_mat
-#     return calc_reliability(copy, 0.9)
 
 
 def k_reliability(edge_mat, k):
@@ -87,6 +82,7 @@ def k_reliability(edge_mat, k):
 
     return calc_reliability(edge_mat, 0.9)
 
+# toggle state of the link
 def flip(edge_mat):
 
     for i in range(10):

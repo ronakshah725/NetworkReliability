@@ -1,0 +1,3 @@
+INTRODUCTION
+
+Our goal is to design an algorithm to evaluate the reliability of a given network configuration. For obtaining this goal, we rely on the probabilty of up and down states of links in the network. We use this to determine the overall probability of the network. 
